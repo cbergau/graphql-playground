@@ -1,20 +1,39 @@
 package de.christianbergau.graphqlspring.resolver;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import graphql.schema.DataFetcher;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collections;
 import java.util.Map;
 
 @Component
 public class DataResolver {
+    static final Gson GSON = new GsonBuilder()
+            //
+            // This is important because the graphql spec says that null values should be present
+            //
+            .serializeNulls()
+            .create();
+
     private String basketServiceBaseUrl = "https://www.esprit.de/services/basketservice";
+
+    private static Map<String, Object> toMap(String jsonStr) {
+        if (jsonStr == null || jsonStr.trim().length() == 0) {
+            return Collections.emptyMap();
+        }
+        // gson uses type tokens for generic input like Map<String,Object>
+        TypeToken<Map<String, Object>> typeToken = new TypeToken<Map<String, Object>>() {
+        };
+        Map<String, Object> map = GSON.fromJson(jsonStr, typeToken.getType());
+        return map == null ? Collections.emptyMap() : map;
+    }
 
     public DataFetcher basketByIdFetcher() {
         return dataFetchingEnvironment -> {
@@ -46,10 +65,7 @@ public class DataResolver {
                 connection.disconnect();
             }
 
-            // Convert JSON String to Map and return it
-            Type mapType = new TypeToken<Map<String, Map>>() {}.getType();
-            Map<String, String[]> result = new Gson().fromJson(content.toString(), mapType);
-            return result;
+            return toMap(content.toString()).get("basket");
         };
     }
 }
