@@ -29,6 +29,9 @@ dependencies {
 	// to embed Voyager tool
 	runtime 'com.graphql-java-kickstart:voyager-spring-boot-starter:5.10.0'
 
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+
 	// testing facilities
 	testCompile 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:5.10.0'
 }

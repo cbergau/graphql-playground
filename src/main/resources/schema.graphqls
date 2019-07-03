@@ -1,16 +1,75 @@
 type Query {
-    bookById(id: ID): Book
+    basketById(basketId: String): Basket
 }
 
-type Book {
-    id: ID
-    name: String
-    pageCount: Int
-    author: Author
+type Basket {
+    basketId: String
+    positions: [Position]
+    giftCard: String
+    minimumPurchaseReached: Boolean
+    maximumPurchaseReached: Boolean
+    isSplitOrder: Boolean
+    basketValue: String
+    basketValueFormatted: String
+    basketValueWithShipping: String
+    basketValueWithShippingFormatted: String
+    shipping: String
+    shippingFormatted: String
+    outOfStock: [Article]
 }
 
-type Author {
-    id: ID
-    firstName: String
-    lastName: String
+type Position {
+    positionId: String
+    additionalPosition: Boolean
+    campaign: String
+    positionValue: String
+    positionValueFormatted: String
+    article: Article
+    quantity: Int
+}
+
+type Article {
+    ean: String
+    colorNumber: String
+    price: String
+    priceBasic:String
+    priceBasicFormatted: String
+    size: String
+    styleNumber: String
+    uri: String
+    workingBox: String
+    comesFrom: String
+    class: String
+    taxRate: Int
+    colorName: String
+    styleName: String
+    brandName: String
+    condition: String
+    maxArticlesCount: Int
+    department: Int
+    stock: Int
+    priceFormatted: String
+    imagePath: String
+    webtrekkOrigin: String
+    fitName: String
+    priceHighlighted: Boolean
+    priceBasicVisible: Boolean
+    variations: [Variation]
+    #stamps: [Stamp]
+}
+
+type Variation {
+    size: String
+    colorName: String
+    colorNumber: String
+    ean: String
+    price: String
+    priceBasic: String
+    priceBasicFormatted: String
+    priceFormatted: String
+    imagePath: String
+    stock: Int
+    taxRate: Int
+    priceBasicVisible: Boolean
+    priceHighlighted: Boolean
 }

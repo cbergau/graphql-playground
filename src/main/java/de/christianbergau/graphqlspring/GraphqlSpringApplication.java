@@ -53,9 +53,9 @@ public class GraphqlSpringApplication {
     private RuntimeWiring buildWiring() {
         return RuntimeWiring.newRuntimeWiring()
                 .type(newTypeWiring("Query")
-                        .dataFetcher("bookById", repository.getBookByIdDataFetcher()))
-                .type(newTypeWiring("Book")
-                        .dataFetcher("author", repository.getAuthorDataFetcher()))
+                        .dataFetcher("basketById", repository.basketByIdFetcher()))
+                //.type(newTypeWiring("Book")
+                //        .dataFetcher("author", repository.getAuthorDataFetcher()))
                 .build();
     }
 }
